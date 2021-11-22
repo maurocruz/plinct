@@ -1,5 +1,6 @@
 .component {
   display: flex;
+  justify-content: space-between;
   height: 100%;
   padding: 0 20px;
 }
@@ -16,4 +17,9 @@
   height: 46px;
   width: 109px;
   margin: 0;
+}
+
+.selector {
+  align-self: center;
+  width: 300px;
 }

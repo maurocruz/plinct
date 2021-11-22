@@ -7,7 +7,7 @@ import useAppContext from '../../contexts/App'
 
 const mapStyles = {
   width: '100%',
-  height: '100%'
+  height: 'calc(100vh - 80px)',
 }
 
 export default function MapContainer({ google, featureCollection }) {
