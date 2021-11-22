@@ -3,12 +3,31 @@
   position: absolute;
   width: 300px;
   height: 300px;
-  top: 10px;
-  right: 10px;
+  top: 140px;
+  right: 60px;
   z-index: 99999;
-  background-color: aliceblue;
+  background-color: white;
+  cursor: grab;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 5px 5px 10px -6px black;
 }
 
 .avatar {
   position: relative;
+  display: flex;
+  justify-content: center;
+  margin: 0 0 10px;
+}
+
+.name {
+  display: flex;
+  justify-content: center;
+}
+
+.close {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  cursor: pointer;
 }

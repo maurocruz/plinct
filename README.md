@@ -8,7 +8,7 @@ This is a proof of concept for X-Team's global map.
 yarn dev
 ```
 
-## Learn More
+## Contributing
 
 If you want to add your geographic information to the map, please submit a PR adding a new folder named with your slack handle at https://github.com/bernardodiasc/x-map/tree/master/public/data. Inside this newly created folder it's expected to have an `avatar.jpg` and a `profile.json`.
 
@@ -24,3 +24,12 @@ At this stage the project is very simple and the shape of your profile must be l
 ```
 
 Then remember to import and export your profile in the https://github.com/bernardodiasc/x-map/tree/master/public/data/index.js.
+
+### Presentatation and features
+
+Prototype: https://www.figma.com/file/KSnkYUzmLP06jbv0vhTMrU/X-MAP?node-id=0%3A1
+
+Contributors:
+
+- Bernardo Dias (developer)
+- Felipe Dias (designer)

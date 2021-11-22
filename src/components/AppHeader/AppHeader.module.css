@@ -1,0 +1,19 @@
+.component {
+  display: flex;
+  height: 100%;
+  padding: 0 20px;
+}
+
+.logo {
+  display: block;
+  flex-shrink: 0;
+  height: 46px;
+  align-self: center;
+}
+
+.logo img {
+  display: block;
+  height: 46px;
+  width: 109px;
+  margin: 0;
+}
