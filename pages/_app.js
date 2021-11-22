@@ -1,7 +1,16 @@
-import '../styles/globals.css'
+import '../src/styles/globals.css'
 
-function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+import { AppProvider } from '../src/contexts/App'
+import AppContainer from '../src/containers/App'
+
+function App({ Component, pageProps }) {
+  return (
+    <AppProvider {...pageProps}>
+      <AppContainer>
+        <Component />
+      </AppContainer>
+    </AppProvider>
+  )
 }
 
-export default MyApp
+export default App

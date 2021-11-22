@@ -10,6 +10,8 @@
   "dependencies": {
     "google-map-react": "^2.1.10",
     "google-maps-react": "^2.0.6",
+    "json-loader": "^0.5.7",
+    "json-schema-faker": "^0.5.0-rcv.40",
     "leaflet": "^1.7.1",
     "next": "12.0.4",
     "react": "17.0.2",
