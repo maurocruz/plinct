@@ -1,0 +1,14 @@
+.info {
+  display: block;
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  top: 10px;
+  right: 10px;
+  z-index: 99999;
+  background-color: aliceblue;
+}
+
+.avatar {
+  position: relative;
+}

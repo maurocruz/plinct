@@ -3,12 +3,15 @@ import { Map } from 'google-maps-react'
 
 import Loading from '../Loading'
 
+import useAppContext from '../../contexts/App'
+
 const mapStyles = {
   width: '100%',
   height: '100%'
 }
 
 export default function MapContainer({ google, featureCollection }) {
+  const { setSelected } = useAppContext()
   const [locationX, setLocationX] = useState(0)
   const [locationY, setLocationY] = useState(0)
   const [locationRendered, setLocationRendered] = useState(false)
@@ -28,6 +31,12 @@ export default function MapContainer({ google, featureCollection }) {
 
   const loadGeoData = (mapProps, map) => {
     map.data.addGeoJson(featureCollection)
+    map.data.addListener('click', event => {
+      const { feature } = event
+      const type = feature.getProperty('type')
+      const uid = feature.getProperty('uid')
+      setSelected({ type, uid })
+    })
   }
 
   useEffect(() => {

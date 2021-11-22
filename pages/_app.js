@@ -1,14 +1,14 @@
 import '../src/styles/globals.css'
 
 import { AppProvider } from '../src/contexts/App'
-import AppContainer from '../src/containers/App'
+import AppLayout from '../src/components/AppLayout'
 
 function App({ Component, pageProps }) {
   return (
     <AppProvider {...pageProps}>
-      <AppContainer>
+      <AppLayout>
         <Component />
-      </AppContainer>
+      </AppLayout>
     </AppProvider>
   )
 }

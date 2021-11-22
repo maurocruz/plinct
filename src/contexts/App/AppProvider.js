@@ -1,9 +1,13 @@
+import { useState } from 'react'
+
 import AppContext from './AppContext'
 
 import usePlaces from '../../hooks/usePlaces'
 import useProfiles from '../../hooks/useProfiles'
 
 const AppProvider = ({ children }) => {
+  const [selected, setSelected] = useState({})
+
   const places = usePlaces()
   const profiles = useProfiles()
 
@@ -13,7 +17,9 @@ const AppProvider = ({ children }) => {
         collections: {
           places,
           profiles,
-        }
+        },
+        selected,
+        setSelected
       }}
     >
       {children}
