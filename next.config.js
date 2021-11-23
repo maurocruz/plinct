@@ -6,6 +6,7 @@ module.exports = {
     config.resolve.alias = {
       ...config.resolve.alias,
       '@dev': path.resolve(__dirname, './dev'),
+      '@public': path.resolve(__dirname, './public'),
       '@data': path.resolve(__dirname, './public/data'),
       '@components': path.resolve(__dirname, './src/components'),
       '@contexts': path.resolve(__dirname, './src/contexts'),

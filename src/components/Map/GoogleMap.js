@@ -3,7 +3,7 @@ import { Map } from 'google-maps-react'
 
 import Loading from '../Loading'
 
-import useAppContext from '../../contexts/App'
+import useAppContext from '@contexts/App'
 
 const mapStyles = {
   width: '100%',

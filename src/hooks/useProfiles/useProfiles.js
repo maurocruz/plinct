@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 
-import { dataToGeoFeatureCollection } from '../../lib/geo'
+import { dataToGeoFeatureCollection } from '@lib/geo'
 
-import data from '../../../public/data'
+import data from '@public/data'
 
 function useProfiles () {
   const [collection, setCollection] = useState(null)

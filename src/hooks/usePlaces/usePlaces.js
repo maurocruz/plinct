@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
-import { dataToGeoFeatureCollection } from '../../lib/geo'
-import { getSamples } from '../../lib/random'
+import { dataToGeoFeatureCollection } from '@lib/geo'
+import { getSamples } from '@lib/random'
 
 import schema from './schema'
 

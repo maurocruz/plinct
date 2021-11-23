@@ -2,13 +2,12 @@
   display: block;
   position: absolute;
   width: 300px;
-  height: 300px;
+  height: 500px;
   top: 140px;
   right: 60px;
   background-color: white;
   cursor: grab;
-  padding: 20px;
-  border-radius: 5px;
+  border-radius: 4px;
   box-shadow: 5px 5px 10px -6px black;
 }
 
@@ -17,16 +16,44 @@
   display: flex;
   justify-content: center;
   margin: 0 0 10px;
+  height: 300px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 4px 4px 0 0;
 }
 
 .name {
   display: flex;
   justify-content: center;
+  margin: 5px 0 10px;
+  padding: 0 10px;
 }
 
 .close {
   position: absolute;
-  top: 8px;
-  right: 10px;
   cursor: pointer;
+  padding: 4px 8px;
+  top: 0;
+  right: 0;
+  font-weight: bold;
+  color: gray;
+  background: white;
+  z-index: 1;
+  opacity: .8;
+  border-radius: 0 4px 0 4px;
+}
+
+.close:hover {
+  opacity: 1;
+}
+
+.paragraph {
+  font-size: .8rem;
+  margin: 5px 0;
+  padding: 0 10px;
+}
+
+.paragraph a:hover {
+  text-decoration: underline;
 }

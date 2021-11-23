@@ -6,10 +6,10 @@ import useAppContext from '@contexts/App'
 
 import * as styles from './AppHeader.module.css'
 
-import logo from '../../../public/x-team-logo.svg'
+import logo from '@public/x-team-logo.svg'
 
 const AppHeader = () => {
-  const { collections, setSelected } = useAppContext()
+  const { collections, selectedFeature, setSelected } = useAppContext()
 
   const options = useMemo(() => {
     return collections?.profiles?.features.map(feature => {
@@ -24,8 +24,12 @@ const AppHeader = () => {
     })
   }, [collections])
 
+  const selectedOption = useMemo(() => {
+    return options?.find(option => option.value.uid === selectedFeature?.uid)
+  }, [options, selectedFeature])
+
   const handleChange = option => {
-    setSelected(option.value)
+    setSelected(option?.value)
   }
 
   return (
@@ -34,7 +38,7 @@ const AppHeader = () => {
         <Image src={logo} width="109" alt="X-Team" />
       </div>
       <div className={styles.selector}>
-        <Select options={options} onChange={handleChange} />
+        <Select options={options} value={selectedOption} onChange={handleChange} isClearable isSearchable placeholder="Select profile..." />
       </div>
     </div>
   )
