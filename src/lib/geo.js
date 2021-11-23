@@ -1,4 +1,4 @@
-export const dataToGeoFeature = (data) => ({
+export const dataToGeoFeature = (data = {}) => ({
   type: 'Feature',
   geometry: {
     type: 'Point',
@@ -7,12 +7,12 @@ export const dataToGeoFeature = (data) => ({
   properties: data,
 })
 
-export const dataToGeoFeatureCollection = (data) => ({
+export const dataToGeoFeatureCollection = (data = []) => ({
   type: 'FeatureCollection',
   features: data.map(each => dataToGeoFeature(each)),
 })
 
-export const geoFeaturesToCollection = (features) => ({
+export const geoFeaturesToCollection = (features = {}) => ({
   type: 'FeatureCollection',
   features,
 })

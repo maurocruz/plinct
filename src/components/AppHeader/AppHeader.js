@@ -12,9 +12,9 @@ const AppHeader = () => {
   const { collections, selectedFeature, setSelected } = useAppContext()
 
   const options = useMemo(() => {
-    return collections?.profiles?.features.map(feature => {
+    return collections?.profiles?.features?.map(feature => {
       const { properties } = feature
-      return {
+      return properties && {
         value: {
           type: properties.type,
           uid: properties.uid,
@@ -38,7 +38,16 @@ const AppHeader = () => {
         <Image src={logo} width="109" alt="X-Team" />
       </div>
       <div className={styles.selector}>
-        <Select options={options} value={selectedOption} onChange={handleChange} isClearable isSearchable placeholder="Select profile..." />
+        <Select
+          instanceId="profile-selector"
+          options={options}
+          value={selectedOption}
+          onChange={handleChange}
+          isClearable
+          isSearchable
+          placeholder={options ? 'Select profile...' : 'Loading profiles...'}
+          isDisabled={!options}
+        />
       </div>
     </div>
   )

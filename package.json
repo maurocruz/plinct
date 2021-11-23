@@ -9,10 +9,8 @@
     "gen": "node dev/generator/generator.js"
   },
   "dependencies": {
-    "ejs": "^3.1.6",
-    "google-map-react": "^2.1.10",
+    "axios": "^0.24.0",
     "google-maps-react": "^2.0.6",
-    "inquirer": "^8.2.0",
     "json-loader": "^0.5.7",
     "json-schema-faker": "^0.5.0-rcv.40",
     "leaflet": "^1.7.1",
@@ -21,10 +19,13 @@
     "react-dom": "17.0.2",
     "react-draggable": "^4.4.4",
     "react-leaflet": "^3.2.2",
-    "react-select": "^5.2.1"
+    "react-select": "^5.2.1",
+    "swr": "^1.0.1"
   },
   "devDependencies": {
+    "ejs": "^3.1.6",
     "eslint": "7",
-    "eslint-config-next": "12.0.4"
+    "eslint-config-next": "12.0.4",
+    "inquirer": "^8.2.0"
   }
 }

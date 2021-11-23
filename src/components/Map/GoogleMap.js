@@ -43,7 +43,7 @@ export default function MapContainer({ google, featureCollection }) {
     getUserLocation()
   }, []) // eslint-disable-line
 
-  return locationRendered ? (
+  return locationRendered && featureCollection ? (
     <Map
       google={google}
       initialCenter={{
