@@ -1,8 +1,30 @@
 # X-Map
 
-This is a proof of concept for X-Team's global map.
+This is a proof of concept for X-Team's global map. Be advised that it's on very early stage but opended for contributions.
 
 ## Getting Started
+
+First create a `.env.local` in the root of this project and add the keys:
+
+### Google Maps API
+
+```
+NEXT_PUBLIC_GMAPS_API_KEY
+```
+
+The Google Maps API key is required to appropriatedly load the map. In order to get the key you must create a new project at Google Cloud, then activate the Google Maps API for this new project, and also add Billing details, see more:
+
+### Experimental data from server
+
+```
+NEXT_PUBLIC_API_URL=http://localhost:1337
+```
+
+If you have a server with compatible profile data, you must run the server and add this env var.
+
+### Development
+
+To run your project locally:
 
 ```bash
 yarn dev
@@ -27,7 +49,7 @@ Then remember to import and export your profile in the https://github.com/bernar
 
 ### Presentatation and features
 
-Prototype: https://www.figma.com/file/KSnkYUzmLP06jbv0vhTMrU/X-MAP?node-id=0%3A1
+Prototype (just a draft): https://www.figma.com/file/KSnkYUzmLP06jbv0vhTMrU/X-MAP?node-id=0%3A1
 
 Contributors:
 

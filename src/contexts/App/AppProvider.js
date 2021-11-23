@@ -2,18 +2,21 @@ import { useState, useMemo } from 'react'
 
 import AppContext from './AppContext'
 
+import useEvents from '@hooks/useEvents'
 import usePlaces from '@hooks/usePlaces'
 import useProfiles from '@hooks/useProfiles'
 
 const AppProvider = ({ children }) => {
+  const events = useEvents()
   const places = usePlaces()
   const profiles = useProfiles()
   const [selectedNode, setSelected] = useState()
 
   const collections = useMemo(() => ({
+    events,
     places,
     profiles,
-  }), [places, profiles])
+  }), [events, places, profiles])
 
   const selectedFeature = useMemo(() => {
     const { type, uid } = selectedNode || {}

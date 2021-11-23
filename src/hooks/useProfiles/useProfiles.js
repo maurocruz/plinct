@@ -3,13 +3,14 @@ import useSWR from 'swr'
 
 import { dataToGeoFeatureCollection } from '@lib/geo'
 
-import staticData from '@public/data'
+import staticData from '@public/profiles'
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:1337'
 const PROFILES_ENDPOINT = API_URL + '/profiles/xmap'
 
 function useProfiles () {
-  const { data, error } = useSWR(PROFILES_ENDPOINT)
+  // const { data, error } = useSWR(PROFILES_ENDPOINT)
+  const { data, error = true } = {} // This is temporary, just to disable API fetching feature
 
   const translateAPIProfiles = (profiles = []) => profiles.map(profile => (
     {

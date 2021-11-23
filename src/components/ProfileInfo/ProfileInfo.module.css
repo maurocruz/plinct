@@ -1,0 +1,29 @@
+.avatar {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin: 0 0 10px;
+  height: 300px;
+  width: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 4px 4px 0 0;
+}
+
+.name {
+  display: flex;
+  justify-content: center;
+  margin: 5px 0 10px;
+  padding: 0 10px;
+}
+
+.paragraph {
+  font-size: .8rem;
+  margin: 5px 0;
+  padding: 0 10px;
+}
+
+.paragraph a:hover {
+  text-decoration: underline;
+}
