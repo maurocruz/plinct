@@ -14,6 +14,7 @@ function App({ Component, pageProps }) {
         fetcher: (resource, init) => axios.get(resource, init).then(res => res.data),
         revalidateOnFocus: false,
         revalidateOnReconnect: false,
+        shouldRetryOnError: false,
       }}
     >
       <AppProvider {...pageProps}>

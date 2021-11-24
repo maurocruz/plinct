@@ -20,8 +20,11 @@
 
 .paragraph {
   font-size: .8rem;
-  margin: 5px 0;
-  padding: 0 10px;
+  margin: 5px 10px;
+  padding: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .paragraph a:hover {
