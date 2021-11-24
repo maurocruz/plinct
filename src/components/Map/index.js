@@ -1,12 +1,12 @@
 import { GoogleApiWrapper } from 'google-maps-react'
 
-import Loading from '../Loading'
+// import Loading from '../Loading'
 import GoogleMap from './GoogleMap'
 
 export default GoogleApiWrapper(
   (props) => ({
     apiKey: process.env.NEXT_PUBLIC_GMAPS_API_KEY,
-    LoadingContainer: Loading,
+    // LoadingContainer: Loading,
     ...props,
   })
 )(GoogleMap)

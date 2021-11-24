@@ -2,14 +2,16 @@ import { useState, useMemo } from 'react'
 
 import AppContext from './AppContext'
 
+import AppLayout from '@components/AppLayout'
+
 import useEvents from '@hooks/useEvents'
 import usePlaces from '@hooks/usePlaces'
 import useProfiles from '@hooks/useProfiles'
 
 const AppProvider = ({ children }) => {
-  const events = useEvents()
-  const places = usePlaces()
-  const profiles = useProfiles()
+  const { events, isLoadingEvents } = useEvents()
+  const { places, isLoadingPlaces } = usePlaces()
+  const { profiles, isLoadingProfiles } = useProfiles()
   const [selectedNode, setSelected] = useState()
 
   const collections = useMemo(() => ({
@@ -24,6 +26,8 @@ const AppProvider = ({ children }) => {
     return feature?.properties
   }, [collections, selectedNode])
 
+  const isLoadingData = isLoadingEvents || isLoadingPlaces || isLoadingProfiles
+
   return (
     <AppContext.Provider
       value={{
@@ -32,7 +36,9 @@ const AppProvider = ({ children }) => {
         setSelected,
       }}
     >
-      {children}
+      <AppLayout isLoading={isLoadingData}>
+        {children}
+      </AppLayout>
     </AppContext.Provider>
   )
 }

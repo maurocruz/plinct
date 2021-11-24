@@ -13,6 +13,7 @@ const GMAPS_GEOCODE_ENDPOINT = `https://maps.googleapis.com/maps/api/geocode/jso
 
 function useProfiles () {
   const { data, error } = useSWR(PROFILES_ENDPOINT)
+  const [isLoading, setIsLoading] = useState(true)
   const [featureCollection, setFeatureCollection] = useState(null)
 
   const translateAPIProfiles = async (profiles = []) => await Promise.all(
@@ -46,7 +47,7 @@ function useProfiles () {
   ).then(data => data.filter(Boolean))
 
   const generateFeatureCollection = useCallback(async () => {
-    let profiles = []
+    let profiles
 
     if (Boolean(error)) {
       profiles = staticData.profiles
@@ -54,15 +55,21 @@ function useProfiles () {
       profiles = await translateAPIProfiles(data.profiles)
     }
 
-    const featureCollection = (data || profiles) && dataToGeoFeatureCollection(profiles)
-    setFeatureCollection(featureCollection)
+    if ((data && !error) || profiles) {
+      const featureCollection = dataToGeoFeatureCollection(profiles)
+      setFeatureCollection(featureCollection)
+      setIsLoading(false)
+    }
   }, [data, error])
 
   useEffect(() => {
     generateFeatureCollection()
   }, [generateFeatureCollection])
 
-  return featureCollection
+  return {
+    profiles: featureCollection,
+    isLoadingProfiles: isLoading,
+  }
 }
 
 export default useProfiles

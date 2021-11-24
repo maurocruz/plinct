@@ -6,19 +6,24 @@ import { getSamples } from '@lib/random'
 import schema from './schema'
 
 function usePlaces () {
-  const [collection, setCollection] = useState(null)
+  const [isLoading, setIsLoading] = useState(true)
+  const [featureCollection, setFeatureCollection] = useState(null)
 
   const generateFeatureCollection = () => {
     const allMarkers = getSamples(schema, 3)
     const featureCollection = dataToGeoFeatureCollection(allMarkers)
-    setCollection(featureCollection)
+    setFeatureCollection(featureCollection)
+    setIsLoading(false)
   }
 
   useEffect(() => {
     generateFeatureCollection()
   }, [])
 
-  return collection
+  return {
+    places: featureCollection,
+    isLoadingPlaces: isLoading,
+  }
 }
 
 export default usePlaces
