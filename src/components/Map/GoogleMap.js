@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Map } from 'google-maps-react'
+import { MarkerClusterer } from "@googlemaps/markerclusterer"
 
 import Loading from '../Loading'
 
@@ -12,45 +13,40 @@ const mapStyles = {
 
 export default function MapContainer({ google, featureCollection }) {
   const { setSelected } = useAppContext()
-  const [locationX, setLocationX] = useState(0)
-  const [locationY, setLocationY] = useState(0)
-  const [locationRendered, setLocationRendered] = useState(false)
-  const [zoom, setZoom] = useState(3)
-
-  const showPosition = position => {
-    setLocationX(position.coords.latitude)
-    setLocationY(position.coords.longitude)
-    setLocationRendered(true)
-  }
-
-  const getUserLocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(showPosition, () => setLocationRendered(true))
-    }
-  }
-
   const loadGeoData = (mapProps, map) => {
-    map.data.addGeoJson(featureCollection)
-    map.data.addListener('click', event => {
-      const { feature } = event
-      const type = feature.getProperty('type')
-      const uid = feature.getProperty('uid')
-      setSelected({ type, uid })
+    const bounds = new google.maps.LatLngBounds()
+    const markerClusterer = new MarkerClusterer(map, null, { imagePath: 'https://cdn.rawgit.com/googlemaps/js-marker-clusterer/gh-pages/images/m' })
+
+    markerClusterer.setMap(map)
+    google.maps.event.addListener(map.data, 'addfeature', function (event) {
+      if (event.feature.getGeometry().getType() === 'Point') {
+        const marker = new google.maps.Marker({
+          position: event.feature.getGeometry().get(),
+          title: event.feature.getProperty('name'),
+          map: map
+        })
+
+        google.maps.event.addListener(marker, 'click', function (marker, event) {
+          return function() {
+            const type = event.feature.getProperty('type')
+            const uid = event.feature.getProperty('uid')
+            setSelected({ type, uid })
+          }
+        }(marker, event))
+
+        markerClusterer.addMarker(marker)
+        bounds.extend(event.feature.getGeometry().get())
+        map.fitBounds(bounds)
+        map.setCenter(event.feature.getGeometry().get())
+      }
     })
+    map.data.addGeoJson(featureCollection)
+    map.data.setMap(null)
   }
 
-  useEffect(() => {
-    getUserLocation()
-  }, []) // eslint-disable-line
-
-  return locationRendered && featureCollection ? (
+  return featureCollection ? (
     <Map
       google={google}
-      initialCenter={{
-        lat: locationX,
-        lng: locationY
-      }}
-      zoom={zoom}
       style={mapStyles}
       onReady={loadGeoData}
     />

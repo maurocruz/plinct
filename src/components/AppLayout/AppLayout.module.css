@@ -13,3 +13,7 @@
 .map {
   height: calc(100vh - 80px);
 }
+
+.map > div {
+  height: 100%;
+}
