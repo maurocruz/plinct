@@ -84,7 +84,7 @@ const AppHeader = () => {
           onChange={handleChange}
           isClearable
           isSearchable
-          placeholder={options ? 'Select profile...' : 'Loading profiles...'}
+          placeholder={options ? 'Select by profile or location...' : 'Loading profiles...'}
           isDisabled={!options}
         />
       </div>

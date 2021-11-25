@@ -1,15 +1,18 @@
 .info {
   display: block;
   position: absolute;
-  width: 300px;
+  width: 50vw;
+  max-width: 400px;
   height: auto;
   top: 140px;
-  right: 60px;
+  left: 10px;
   background-color: white;
   cursor: grab;
   border-radius: 4px;
   box-shadow: 5px 5px 10px -6px black;
   padding: 0 0 10px;
+  max-height: calc(100vh - 170px);
+  overflow-y: auto;
 }
 
 .close {
