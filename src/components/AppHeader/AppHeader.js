@@ -9,12 +9,16 @@ import * as styles from './AppHeader.module.css'
 import logo from '@public/x-team-logo.svg'
 
 const AppHeader = () => {
-  const { collections, selectedFeature, setSelected } = useAppContext()
+  const { collections, selectedFeature, selectedNode, setSelected } = useAppContext()
 
+  const GROUP_LABEL_BY_PROFILES = 'By Profiles'
+  const GROUP_LABEL_BY_LOCATIONS = 'By Locations'
+
+  // TO DO: This only supports "profiles", the component should be abstracted
   const options = useMemo(() => {
     const features = collections?.profiles?.features || []
     const profiles = features.reduce((acc, cur) => [...acc, ...cur.properties.profiles], [])
-    return profiles.map(profile => {
+    const profilesOptions = profiles.map(profile => {
       return {
         value: {
           type: 'profile',
@@ -23,12 +27,45 @@ const AppHeader = () => {
         label: profile.name,
       }
     })
+    const locationsOptions = features.reduce((acc, cur) => {
+      const location = cur.properties.location
+      return [
+        ...acc,
+        {
+          value: {
+            type: 'profile',
+            location,
+          },
+          label: location,
+        }
+      ]
+    }, [])
+    const options = [
+      {
+        label: GROUP_LABEL_BY_PROFILES,
+        options: profilesOptions,
+      },
+      {
+        label: GROUP_LABEL_BY_LOCATIONS,
+        options: locationsOptions,
+      }
+    ]
+    return options
   }, [collections])
 
   const selectedOption = useMemo(() => {
-    const selected = options?.find(option => option.value.uid === selectedFeature?.uid)
-    return selected || null
-  }, [options, selectedFeature])
+    if (selectedNode?.uid) {
+      const selectedOptionsGroup = options?.find(group => group.label === GROUP_LABEL_BY_PROFILES)
+      const selected = selectedOptionsGroup?.options?.find(option => option.value.uid === selectedNode?.uid)
+      return selected || null
+    }
+    if (selectedNode?.location) {
+      const selectedOptionsGroup = options?.find(group => group.label === GROUP_LABEL_BY_LOCATIONS)
+      const selected = selectedOptionsGroup?.options?.find(option => option.value.location === selectedNode?.location)
+      return selected || null
+    }
+    return null
+  }, [options, selectedNode])
 
   const handleChange = option => {
     setSelected(option?.value)

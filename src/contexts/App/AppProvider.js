@@ -44,6 +44,7 @@ const AppProvider = ({ children }) => {
       value={{
         collections,
         selectedFeature,
+        selectedNode,
         setSelected,
       }}
     >

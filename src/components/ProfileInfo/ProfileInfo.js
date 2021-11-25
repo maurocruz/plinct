@@ -4,7 +4,6 @@ import * as styles from './ProfileInfo.module.css'
 
 const ProfileInfo = ({ children }) => {
   const { selectedFeature } = useAppContext()
-  console.log(selectedFeature)
 
   if (selectedFeature.profiles) {
     return (
