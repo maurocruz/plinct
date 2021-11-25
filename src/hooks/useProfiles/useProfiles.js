@@ -16,33 +16,75 @@ function useProfiles () {
   const [isLoading, setIsLoading] = useState(true)
   const [featureCollection, setFeatureCollection] = useState(null)
 
-  const translateAPIProfiles = async (profiles = []) => await Promise.all(
-    profiles
-      .map(async profile => {
-        if (!Boolean(profile?.country?.trim())) {
+  const translateAPIProfiles = (profiles = []) => profiles
+    .map(profile => {
+      if (!Boolean(profile?.country?.trim())) {
+        return null
+      }
+      return ({
+        uid: profile.id,
+        name: profile.fullName,
+        role: profile.summary,
+        location: profile.country,
+        timezone: profile.timezoneOffset,
+        networks: {
+          github: profile.githubAccount,
+          stackoverflow: profile.stackoverflowAccount,
+          linkedin: profile.linkedinAccount,
+        }
+      })
+    })
+
+  const groupByLocation = (profiles = []) => profiles
+    .reduce((acc, cur) => {
+      if (!Boolean(cur.location?.trim())) {
+        return acc
+      }
+
+      const existingLocation = acc.findIndex(a => a.location === cur.location)
+
+      if (existingLocation >= 0) {
+        acc[existingLocation] = {
+          ...acc[existingLocation],
+          profiles: [
+            ...acc[existingLocation].profiles,
+            {
+              ...cur,
+              type: 'profile',
+            },
+          ]
+        }
+        return acc
+      }
+
+      return [
+        ...acc,
+        {
+          type: 'profile',
+          location: cur.location,
+          profiles: [
+            {
+              ...cur,
+              type: 'profile',
+            }
+          ]
+        }
+      ]
+    }, [])
+
+  const getCoordinatesFromLocation = async (locations = []) => await Promise.all(
+    locations
+      .map(async place => {
+        if (!Boolean(place?.location?.trim())) {
           return null
         }
-
-        const { data: { results } } = await axios.get(`${GMAPS_GEOCODE_ENDPOINT}&address=${profile.country}`)
+        const { data: { results } } = await axios.get(`${GMAPS_GEOCODE_ENDPOINT}&address=${place.location}`)
         const { location } = results[0]?.geometry
         const coordinates = [location.lng, location.lat]
-
-        return ({
-          type: 'profile',
-          uid: profile.id,
-          name: profile.fullName,
+        return {
+          ...place,
           coordinates,
-          role: profile.summary,
-          location: profile.country,
-          timezone: profile.timezoneOffset,
-          networks: {
-            github: profile.githubAccount,
-            stackoverflow: profile.stackoverflowAccount,
-            linkedin: profile.linkedinAccount,
-            // twitter: profile.twitterAccount,
-            // instagram: profile.instagramAccount,
-          }
-        })
+        }
       })
   ).then(data => data.filter(Boolean))
 
@@ -52,11 +94,12 @@ function useProfiles () {
     if (Boolean(error)) {
       profiles = staticData.profiles
     } else if (data?.profiles?.length > 0 && !Boolean(error)) {
-      profiles = await translateAPIProfiles(data.profiles)
+      profiles = translateAPIProfiles(data.profiles)
     }
 
     if ((data && !error) || profiles) {
-      const featureCollection = dataToGeoFeatureCollection(profiles)
+      const groupedByLocation = await getCoordinatesFromLocation(groupByLocation(profiles))
+      const featureCollection = dataToGeoFeatureCollection(groupedByLocation)
       setFeatureCollection(featureCollection)
       setIsLoading(false)
     }

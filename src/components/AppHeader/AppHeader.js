@@ -12,20 +12,22 @@ const AppHeader = () => {
   const { collections, selectedFeature, setSelected } = useAppContext()
 
   const options = useMemo(() => {
-    return collections?.profiles?.features?.map(feature => {
-      const { properties } = feature
-      return properties && {
+    const features = collections?.profiles?.features || []
+    const profiles = features.reduce((acc, cur) => [...acc, ...cur.properties.profiles], [])
+    return profiles.map(profile => {
+      return {
         value: {
-          type: properties.type,
-          uid: properties.uid,
+          type: 'profile',
+          uid: profile.uid,
         },
-        label: properties.name,
+        label: profile.name,
       }
     })
   }, [collections])
 
   const selectedOption = useMemo(() => {
-    return options?.find(option => option.value.uid === selectedFeature?.uid)
+    const selected = options?.find(option => option.value.uid === selectedFeature?.uid)
+    return selected || null
   }, [options, selectedFeature])
 
   const handleChange = option => {

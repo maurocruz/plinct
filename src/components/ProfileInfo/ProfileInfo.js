@@ -4,6 +4,19 @@ import * as styles from './ProfileInfo.module.css'
 
 const ProfileInfo = ({ children }) => {
   const { selectedFeature } = useAppContext()
+  console.log(selectedFeature)
+
+  if (selectedFeature.profiles) {
+    return (
+      <div className={styles.component}>
+        <h2 className={styles.name}>{selectedFeature.location}</h2>
+        {selectedFeature.profiles.map(profile => (
+          <h3 key={profile.uid}>{profile.name}</h3>
+        ))}
+      </div>
+    )
+  }
+
   return (
     <div className={styles.component}>
       <div className={styles.avatar} style={{ backgroundImage: `url(/avatar.png)` }}>

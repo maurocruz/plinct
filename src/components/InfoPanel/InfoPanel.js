@@ -23,6 +23,7 @@ const Panel = () => {
     setSelected(null)
   }
 
+  // TO DO: allow to display "events" type
   const Info = {
     profile: ProfileInfo,
     event: EventInfo,

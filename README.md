@@ -38,10 +38,9 @@ At this stage the project is very simple and the shape of your profile must be l
 
 ```json
 {
-  "type": "profile",
   "uid": "bernardo",
   "name": "Bernardo Dias da Cruz",
-  "coordinates": [-45.0722002, -23.3975554]
+  "location": "Ubatuba, Brazil"
 }
 ```
 

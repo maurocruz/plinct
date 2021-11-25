@@ -1,6 +1,5 @@
 {
-  "type": "profile",
   "uid": "someone03",
   "name": "Someone 03",
-  "coordinates": [36.8251449, 55.5807481]
+  "location": "Bahia"
 }

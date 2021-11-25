@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react'
 import { Map } from 'google-maps-react'
 import { MarkerClusterer } from "@googlemaps/markerclusterer"
 
@@ -29,8 +28,8 @@ export default function MapContainer({ google, featureCollection }) {
         google.maps.event.addListener(marker, 'click', function (marker, event) {
           return function() {
             const type = event.feature.getProperty('type')
-            const uid = event.feature.getProperty('uid')
-            setSelected({ type, uid })
+            const location = event.feature.getProperty('location')
+            setSelected({ type, location })
           }
         }(marker, event))
 

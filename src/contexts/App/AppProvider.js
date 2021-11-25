@@ -12,7 +12,7 @@ const AppProvider = ({ children }) => {
   const { events, isLoadingEvents } = useEvents()
   const { places, isLoadingPlaces } = usePlaces()
   const { profiles, isLoadingProfiles } = useProfiles()
-  const [selectedNode, setSelected] = useState()
+  const [selectedNode, setSelected] = useState(null)
 
   const collections = useMemo(() => ({
     events,
@@ -21,9 +21,20 @@ const AppProvider = ({ children }) => {
   }), [events, places, profiles])
 
   const selectedFeature = useMemo(() => {
-    const { type, uid } = selectedNode || {}
-    const feature = collections[`${type}s`]?.features.find(feature => feature.properties.uid === uid)
-    return feature?.properties
+    const { type, uid, location } = selectedNode || {}
+    const features = collections[`${type}s`]?.features || []
+    if (location) {
+      const feature = features.find(feature => feature.properties?.location === location)
+      const profiles = feature?.properties
+      return profiles
+    }
+    if (uid) {
+      // This code only works for "profiles" at the moment
+      const feature = features.find(feature => feature.properties?.profiles?.find(profile => profile.uid === uid))
+      const profile = feature?.properties?.profiles?.find(profile => profile.uid === uid)
+      return profile
+    }
+    return null
   }, [collections, selectedNode])
 
   const isLoadingData = isLoadingEvents || isLoadingPlaces || isLoadingProfiles
