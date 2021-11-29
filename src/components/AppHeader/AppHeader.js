@@ -9,7 +9,7 @@ import * as styles from './AppHeader.module.css'
 import logo from '@public/x-team-logo.svg'
 
 const AppHeader = () => {
-  const { collections, selectedFeature, selectedNode, setSelected } = useAppContext()
+  const { collections, selectedFeature, selectedNode, setSelected, toggleModal } = useAppContext()
 
   const GROUP_LABEL_BY_PROFILES = 'By Profiles'
   const GROUP_LABEL_BY_LOCATIONS = 'By Locations'
@@ -76,17 +76,25 @@ const AppHeader = () => {
       <div className={styles.logo}>
         <Image src={logo} width="109" alt="X-Team" />
       </div>
-      <div className={styles.selector}>
-        <Select
-          instanceId="profile-selector"
-          options={options}
-          value={selectedOption}
-          onChange={handleChange}
-          isClearable
-          isSearchable
-          placeholder={options ? 'Select by profile or location...' : 'Loading profiles...'}
-          isDisabled={!options}
-        />
+      <div className={styles.controls}>
+        <button
+          className={styles.button}
+          onClick={toggleModal}
+        >
+          Add new profile
+        </button>
+        <div className={styles.selector}>
+          <Select
+            instanceId="profile-selector"
+            options={options}
+            value={selectedOption}
+            onChange={handleChange}
+            isClearable
+            isSearchable
+            placeholder={options ? 'Select by profile or location...' : 'Loading profiles...'}
+            isDisabled={!options}
+          />
+        </div>
       </div>
     </div>
   )

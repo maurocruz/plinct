@@ -7,11 +7,14 @@ import AppLayout from '@components/AppLayout'
 import useEvents from '@hooks/useEvents'
 import usePlaces from '@hooks/usePlaces'
 import useProfiles from '@hooks/useProfiles'
+import useModal from '@hooks/useModal'
 
 const AppProvider = ({ children }) => {
   const { events, isLoadingEvents } = useEvents()
   const { places, isLoadingPlaces } = usePlaces()
   const { profiles, isLoadingProfiles } = useProfiles()
+  const { isModalVisible, toggleModal } = useModal()
+
   const [selectedNode, setSelected] = useState(null)
 
   const collections = useMemo(() => ({
@@ -46,6 +49,8 @@ const AppProvider = ({ children }) => {
         selectedFeature,
         selectedNode,
         setSelected,
+        isModalVisible,
+        toggleModal,
       }}
     >
       <AppLayout isLoading={isLoadingData}>
