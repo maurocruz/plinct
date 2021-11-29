@@ -81,8 +81,14 @@ function useProfiles () {
         const { data: { results } } = await axios.get(`${GMAPS_GEOCODE_ENDPOINT}&address=${place.location}`)
         const { location } = results[0]?.geometry
         const coordinates = [location.lng, location.lat]
+        const profiles = place.profiles?.map(profile => ({
+          ...profile,
+          location: place.location,
+          coordinates,
+        }))
         return {
           ...place,
+          profiles,
           coordinates,
         }
       })

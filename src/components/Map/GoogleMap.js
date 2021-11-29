@@ -1,3 +1,4 @@
+import { useEffect, useState, useMemo } from 'react'
 import { Map } from 'google-maps-react'
 import { MarkerClusterer } from "@googlemaps/markerclusterer"
 
@@ -10,12 +11,33 @@ const mapStyles = {
   height: 'calc(100vh - 80px)',
 }
 
-export default function MapContainer({ google, featureCollection }) {
-  const { setSelected } = useAppContext()
-  const loadGeoData = (mapProps, map) => {
-    const bounds = new google.maps.LatLngBounds()
-    const markerClusterer = new MarkerClusterer(map, null, { imagePath: 'https://cdn.rawgit.com/googlemaps/js-marker-clusterer/gh-pages/images/m' })
+let googleMap
 
+export default function MapContainer({ google, featureCollection }) {
+  const { setSelected, selectedFeature } = useAppContext()
+  const [map, setMap] = useState()
+
+  useEffect(() => {
+    if (!googleMap) {
+      return null
+    }
+
+    if (selectedFeature) {
+      const lng = selectedFeature.coordinates[0]
+      const lat = selectedFeature.coordinates[1]
+      googleMap.setCenter({ lat, lng })
+      googleMap.setZoom(9)
+    } else {
+      googleMap.fitBounds(bounds)
+    }
+  }, [selectedFeature, bounds])
+
+  const bounds = useMemo(() => new google.maps.LatLngBounds(), [google])
+
+  const loadGeoData = (mapProps, map) => {
+    googleMap = map
+
+    const markerClusterer = new MarkerClusterer(map, null, { imagePath: 'https://cdn.rawgit.com/googlemaps/js-marker-clusterer/gh-pages/images/m' })
     markerClusterer.setMap(map)
     google.maps.event.addListener(map.data, 'addfeature', function (event) {
       if (event.feature.getGeometry().getType() === 'Point') {
