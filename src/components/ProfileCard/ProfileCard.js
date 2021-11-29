@@ -1,11 +1,13 @@
 import * as styles from './ProfileCard.module.css'
 
-const ProfileCard = ({ profile }) => (
-  <div className={styles.profile}>
+const ProfileCard = ({ profile, inAccordion }) => (
+  <div className={[styles.profile, inAccordion ? styles.accordion : ''].join(' ')}>
     <div className={styles.avatar} style={{ backgroundImage: `url(/avatar.png)` }}>
       <div className={styles.avatar} style={{ backgroundImage: `url(/profiles/${profile.uid}/avatar.jpg)` }} />
     </div>
-    <h3 className={styles.name}>{profile.name}</h3>
+    {!inAccordion && (
+      <h3 className={styles.name}>{profile.name}</h3>
+    )}
     {profile.role && (
       <p className={styles.paragraph}><strong>Role: </strong> {profile.role}</p>
     )}

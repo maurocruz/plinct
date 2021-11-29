@@ -1,32 +1,53 @@
-.avatar {
-  position: relative;
+.title {
   display: flex;
   justify-content: center;
-  margin: 0 0 10px;
-  height: 300px;
-  width: 100%;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  border-radius: 4px 4px 0 0;
+  margin: 0;
+  padding: 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.name {
-  display: flex;
-  justify-content: center;
-  margin: 5px 0 10px;
-  padding: 0 10px;
+.button {
+  margin: 0;
+  padding: 20px 10px;
+  cursor: pointer;
 }
 
-.paragraph {
-  font-size: .8rem;
-  margin: 5px 10px;
-  padding: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.button:hover {
+  background: rgba(0, 0, 0, 0.02);
 }
 
-.paragraph a:hover {
-  text-decoration: underline;
+.expandedItem > .button {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.button:before {
+  display: inline-block;
+  content: '';
+  height: 6px;
+  width: 6px;
+  margin-right: 12px;
+  border-bottom: 2px solid currentColor;
+  border-right: 2px solid currentColor;
+  transform: rotate(-45deg) translate(4px, 0px);
+}
+
+.expandedItem > .button::before {
+  transform: rotate(45deg) translate(0px, -6px);
+}
+
+.content {
+  display: none;
+}
+
+.item + .item {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.expandedItem > .content {
+  display: block;
+  margin: 0 0 30px;
+}
+
+.item:only-of-type > .content{
+  margin: 0;
 }

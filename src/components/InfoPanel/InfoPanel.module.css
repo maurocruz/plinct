@@ -2,7 +2,8 @@
   display: block;
   position: absolute;
   width: 50vw;
-  max-width: 400px;
+  max-width: 500px;
+  min-width: 400px;
   height: auto;
   top: 140px;
   left: 10px;
@@ -10,7 +11,7 @@
   cursor: grab;
   border-radius: 4px;
   box-shadow: 5px 5px 10px -6px black;
-  padding: 0 0 10px;
+  padding: 0;
   max-height: calc(100vh - 170px);
   overflow-y: auto;
 }
