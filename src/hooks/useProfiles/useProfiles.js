@@ -25,7 +25,8 @@ function useProfiles () {
         uid: profile.id,
         name: profile.fullName,
         role: profile.summary,
-        location: profile.country,
+        place: profile.place,
+        location: [profile.place.city, profile.place.country].join(' - '),
         timezone: profile.timezoneOffset,
         networks: {
           github: profile.githubAccount,
@@ -94,11 +95,16 @@ function useProfiles () {
       })
   ).then(data => data.filter(Boolean))
 
+  const addLocationFromPlaces = (profiles = []) => profiles.map(profile => ({
+    ...profile,
+    location: [profile.place?.city, profile.place?.country].join(' - '),
+  }))
+
   const generateFeatureCollection = useCallback(async () => {
     let profiles
 
     if (Boolean(error)) {
-      profiles = staticData.profiles
+      profiles = addLocationFromPlaces(staticData.profiles)
     } else if (data?.profiles?.length > 0 && !Boolean(error)) {
       profiles = translateAPIProfiles(data.profiles)
     }

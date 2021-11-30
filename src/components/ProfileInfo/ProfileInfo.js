@@ -22,8 +22,6 @@ const ProfileInfo = ({ children }) => {
     setExpanded(i)
   }
 
-  console.log(expanded)
-
   if (selectedFeature.profiles) {
     return (
       <div>
@@ -49,35 +47,6 @@ const ProfileInfo = ({ children }) => {
         ))}
       </div>
     )
-    // return (
-    //   <Accordion
-    //     allowMultipleExpanded
-    //     className={styles.accordion}
-    //   >
-    //     <h2 className={styles.title}>{selectedFeature.location}</h2>
-    //     {selectedFeature.profiles.map((profile, i) => (
-    //       <AccordionItem
-    //         key={profile.uid}
-    //         uuid={profile.uid}
-    //         dangerouslySetExpanded={i === 0}
-    //         className={styles.accordion__item}
-    //       >
-    //         <AccordionItemHeading>
-    //           <AccordionItemButton
-    //             className={styles.accordion__button}
-    //           >
-    //               {profile.name}
-    //           </AccordionItemButton>
-    //         </AccordionItemHeading>
-    //         <AccordionItemPanel
-    //           className={styles.accordion__panel}
-    //         >
-    //           <ProfileCard profile={profile} accordion />
-    //         </AccordionItemPanel>
-    //       </AccordionItem>
-    //     ))}
-    //   </Accordion>
-    // )
   }
 
   return (

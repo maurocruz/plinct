@@ -1,9 +1,11 @@
 {
   "uid": "bernardo",
   "name": "Bernardo Dias da Cruz",
-  "coordinates": [-45.0722002, -23.3975554],
   "role": "Front-end Developer",
-  "location": "Taubaté - Brazil",
+  "place": {
+    "country": "Brazil",
+    "city": "Taubaté"
+  },
   "timezone": "UTC-3",
   "networks": {
     "github": "bernardodiasc",

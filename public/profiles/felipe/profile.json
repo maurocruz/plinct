@@ -1,8 +1,10 @@
 {
   "uid": "felipe",
   "name": "Felipe Dias",
-  "coordinates": [-45.206255, -23.453594],
-  "location": "Ubatuba - Brazil",
+  "place": {
+    "country": "Brazil",
+    "city": "Ubatuba"
+  },
   "timezone": "UTC-3",
   "networks": {
     "github": "felipdcz"

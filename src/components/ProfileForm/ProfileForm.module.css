@@ -6,5 +6,120 @@
   max-height: 80vh;
   background-color: white;
   border-radius: 4px;
-  padding: 20px;
+}
+
+.instructions {
+  margin: 0 40px;
+  padding: 20px 0;
+  border-bottom: 1px dashed #ccc;
+}
+
+.instructions a:hover {
+  text-decoration: underline;
+}
+
+.instructions h2 {
+  text-align: center;
+  margin: 0 0 20px;
+}
+
+.instructions p {
+  text-align: center;
+  margin: 0 0 6px;
+  font-style: italic;
+  color: #777;
+}
+
+.instructions ol {
+  margin: 20px 0 0;
+  padding: 0 0 0 30px;
+}
+
+.instructions li {
+  margin: 0 0 6px;
+}
+
+.instructions li:last-of-type {
+  margin: 0;
+}
+
+.instructions li code {
+  font-size: 16px;
+  background: #eee;
+}
+
+
+.form {
+  padding: 20px 40px 40px;
+}
+
+.label {
+  margin: 0 0 10px;
+  display: flex;
+  align-items: center;
+}
+
+.label span {
+  display: inline-block;
+  width: 160px;
+  text-align: right;
+  margin: 0 10px 0 0;
+  font-weight: bold;
+}
+
+.input {
+  width: 100%;
+  height: 36px;
+  padding: 0 8px;
+  font-size: 16px;
+  color: #444;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  outline: none;
+}
+
+.input:focus {
+  border: 1px solid #333;
+}
+
+.json {
+  display: block;
+  margin: 20px 0 0;
+  padding: 20px 0 0;
+  border-top: 1px dashed #ccc;
+}
+
+.json span {
+  display: inline-block;
+  margin: 0 0 10px;
+  font-weight: bold;
+}
+
+.pre {
+  margin: 0;
+  position: relative;
+  cursor: pointer;
+}
+
+.pre .code {
+  display: block;
+  color: #444;
+  background-color: #eee;
+  overflow-x: auto;
+  padding: 16px 20px;
+  white-space: pre;
+  border-radius: 4px;
+}
+
+.copy {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: flex;
+}
+
+.copy span {
+  margin: 0 10px 0 0;
+  color: #444;
+  font-weight: normal;
 }
