@@ -8,6 +8,8 @@ import * as styles from './AppHeader.module.css'
 
 import logo from '@public/x-team-logo.svg'
 
+import WhereButton from './WhereButton';
+
 const AppHeader = () => {
   const { collections, selectedFeature, selectedNode, setSelected, toggleModal } = useAppContext()
 
@@ -74,9 +76,10 @@ const AppHeader = () => {
   return (
     <div className={styles.component}>
       <div className={styles.logo}>
-        <Image src={logo} width="109" alt="X-Team" />
+        <h1>Plinct App</h1>
       </div>
       <div className={styles.controls}>
+        <WhereButton />
         <button
           className={styles.button}
           onClick={toggleModal}

@@ -13,7 +13,15 @@ const mapStyles = {
 
 let googleMap
 
-export default function MapContainer({ google, featureCollection }) {
+export default function MapContainer({ google, featureCollection, newFeatureCollection }) {
+
+  if (newFeatureCollection) featureCollection = newFeatureCollection;
+
+  // dafaults
+  const zoom = 14;
+
+
+
   const { setSelected, selectedFeature } = useAppContext()
   const [map, setMap] = useState()
 
@@ -62,6 +70,7 @@ export default function MapContainer({ google, featureCollection }) {
       }
     })
     map.data.addGeoJson(featureCollection)
+    map.setZoom(zoom)
     map.data.setMap(null)
   }
 

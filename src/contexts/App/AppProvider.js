@@ -17,6 +17,9 @@ const AppProvider = ({ children }) => {
 
   const [selectedNode, setSelected] = useState(null)
 
+
+  const [ newFeatureCollection, setNewFeatureCollection ] = useState(null);
+
   const collections = useMemo(() => ({
     events,
     places,
@@ -51,6 +54,8 @@ const AppProvider = ({ children }) => {
         setSelected,
         isModalVisible,
         toggleModal,
+        newFeatureCollection,
+        setNewFeatureCollection
       }}
     >
       <AppLayout isLoading={isLoadingData}>
