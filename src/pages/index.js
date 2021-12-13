@@ -2,6 +2,8 @@ import useAppContext from '@contexts/App'
 import dynamic from 'next/dynamic';
 
 import Map from '@components/Map'
+import { useState } from 'react';
+import { useEffect } from 'react';
 
 const MapBox = dynamic(
   () => import('../components/Map/MapBox'),
@@ -12,15 +14,10 @@ const MapBox = dynamic(
 )
 
 export default function Home() {
-  const { collections, newFeatureCollection } = useAppContext()
 
-  if (newFeatureCollection) {
+  const { userLocation } = useAppContext()
+
     return (
-      <MapBox newFeatureCollection={newFeatureCollection} />
+      <MapBox userLocation={userLocation} />
     )
-  }
-
-  return (
-    <Map featureCollection={collections.profiles} />
-  )
 }

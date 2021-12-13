@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import ReactMapGL, { FlyToInterpolator, Marker } from 'react-map-gl';
+import { Icon } from '@iconify/react';
 
-import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
-
-import GeoJsonInterface from '../../interfaces/geoJson/GeoJsonInterface';
 
 /**
  * COMPONENTE MAPA EM LEAFLET
@@ -10,50 +9,68 @@ import GeoJsonInterface from '../../interfaces/geoJson/GeoJsonInterface';
  * @param param0 
  * @returns 
  */
-const MapBox = ({newFeatureCollection}) => 
+const MapBox = ({ userLocation}) => 
 {
     // TOKEN
-    const MAPBOX_TOKEN = "pk.eyJ1IjoibWF1cm9jcnV6IiwiYSI6ImNrdXI5bHpiaTNseTAydnQ0OWIwaHZlYmkifQ.4oPSaqbvl4ybOhV4ysjUdA";
-    // TITLE SIZE
-    const tilesize = "256";
+    const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
     
-    // CENTER DEFAULT BRASÍLIA
-    let longitude = -47.889556334719465;
-    let latitude = -15.791592864042546;
-    let mapZoom = 5;
+    const [ features, setFeatures ] = useState(userLocation.features);
 
     // calcula o centro e o zoom do mapa
-    const collection: GeoJsonInterface = newFeatureCollection;
-    if (collection.features.length > 1) {
+    const longitude = userLocation.features[0].geometry.coordinates[0];
+    const latitude = userLocation.features[0].geometry.coordinates[1];
+    const mapZoom = userLocation.features[0].properties.zoom;
+    
+    const [viewport, setViewport] = useState({
+        latitude: latitude,
+        longitude: longitude,
+        zoom: mapZoom,
+        transitionDuration: 3000,
+        transitionInterpolator: new FlyToInterpolator()
+    });
 
-    } else {
-        longitude = collection.features[0].geometry.coordinates[0];
-        latitude = collection.features[0].geometry.coordinates[1];
-        mapZoom = 14;
+    useEffect(()=>{
+        setViewport({
+            ...viewport,
+            latitude: userLocation.features[0].geometry.coordinates[1],
+            longitude: userLocation.features[0].geometry.coordinates[0],
+            zoom: userLocation.features[0].properties.zoom
+        })
+        setFeatures(userLocation.features);        
+    },[userLocation])
+
+    const styleTooltip = {
+        backgroundColor: 'rgba(255,255,255,0.7)',
+        fontSize: '14px',
+        padding: '3px 5px',
+        marginLeft: '25px',
+        marginTop: '-10px'
     }
 
-    const center = { lng: longitude, lat: latitude }
-    const name = "nome";
-
     return (
-        <MapContainer 
-            center={center} 
-            zoom={mapZoom}        
-            style={{ height: "100%", width: "100%" }}    
-            dragging={true}
-            doubleClickZoom={true}
-            scrollWheelZoom={true}
-            attributionControl={true}
-            zoomControl={true}>
+        <ReactMapGL
+            mapStyle="mapbox://styles/mapbox/streets-v11"
+            mapboxApiAccessToken={process.env.NEXT_PUBLIC_MAPBOX_TOKEN}
+            {...viewport}
+            width="100%"
+            height="100%"
+            onViewportChange={(viewport) => setViewport(viewport)}
+        >
+        
+        {features.map((response: any)=>{
+            const latitude = response.geometry.coordinates[1];
+            const longitude = response.geometry.coordinates[0];
+            const name = response.properties.name;
 
-            <TileLayer 
-                attribution='Map data &copy; <a href=&quot;https://www.openstreetmap.org/&quot;>OpenStreetMap</a> contributors, <a href=&quot;https://creativecommons.org/licenses/by-sa/2.0/&quot;>CC-BY-SA</a>, Imagery &copy; <a href=&quot;https://www.mapbox.com/&quot;>Mapbox</a>'
-                url={`https://api.mapbox.com/styles/v1/maurocruz/ckur99bp404ze15o0icj8kt6h/tiles/${tilesize}/{z}/{x}/{y}@2x?access_token=${MAPBOX_TOKEN}`}               
-            />
-             
-            <GeoJSON data={newFeatureCollection} />
+            return (
+                <Marker key={latitude} latitude={latitude} longitude={longitude} offsetLeft={-7.5} offsetTop={-7.5}>
+                    <div className="mapboxgl-user-location-dot mapboxgl-marker mapboxgl-marker-anchor-center" style={{transform: 'translate(-50%, -50%) translate(540px, 469px) rotateX(0deg) rotateZ(0deg);'}}></div>
+                </Marker>
+            )
 
-        </MapContainer>        
+        })}
+
+        </ReactMapGL>
     )
 }
 

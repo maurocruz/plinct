@@ -16,17 +16,19 @@ class GeoJson
         properties: {}
     }    
 
-    createPoint(latitude: number, longitude: number) 
-    {
+    createPoint(latitude: number, longitude: number, type = 'Point') {
         this.feature.geometry = {
-            type: 'Point',
-            coordinates: [ latitude, longitude ] 
+            type: type,
+            coordinates: [ latitude, longitude ]
         }
-        this.features.push(this.feature);
     }
 
-    ready() 
-    {
+    properties(name: string, value: any) {
+        this.feature.properties[name] = value 
+    }
+
+    ready() {  
+        this.features.push(this.feature)
         this.featureColletion.features = this.features;
         return this.featureColletion
     }
