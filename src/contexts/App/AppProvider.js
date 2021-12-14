@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 
 import AppContext from './AppContext'
 
@@ -8,12 +8,17 @@ import useEvents from '@hooks/useEvents'
 import usePlaces from '@hooks/usePlaces'
 import useProfiles from '@hooks/useProfiles'
 import useModal from '@hooks/useModal'
-import useLocation from '../../hooks/UseLocation/useLocation'
+import useLocation from '../../hooks/useLocation/useLocation'
 
 const AppProvider = ({ children }) => 
 {
-  const { userLocation } = useLocation();
+  const { userLocation } = useLocation()
 
+  const [ location, setLocation ] = useState(userLocation)
+
+  useEffect(() => {
+    setLocation(userLocation)
+  }, [userLocation])
 
   const { events, isLoadingEvents } = useEvents()
   const { places, isLoadingPlaces } = usePlaces()
@@ -21,8 +26,6 @@ const AppProvider = ({ children }) =>
   const { isModalVisible, toggleModal } = useModal()
 
   const [selectedNode, setSelected] = useState(null)
-
-  const [ newFeatureCollection, setNewFeatureCollection ] = useState(null);
 
   /*const collections = useMemo(() => ({
     events,
@@ -52,15 +55,14 @@ const AppProvider = ({ children }) =>
   return (
     <AppContext.Provider
       value={{
+        location,
+        setLocation,
         //collections,
         //selectedFeature,
         selectedNode,
         setSelected,
         isModalVisible,
-        toggleModal,
-        newFeatureCollection,
-        setNewFeatureCollection,
-        userLocation
+        toggleModal
       }}
     >
       <AppLayout isLoading={isLoadingData}>

@@ -1,9 +1,6 @@
 import useAppContext from '@contexts/App'
-import dynamic from 'next/dynamic';
 
-import Map from '@components/Map'
-import { useState } from 'react';
-import { useEffect } from 'react';
+import dynamic from 'next/dynamic';
 
 const MapBox = dynamic(
   () => import('../components/Map/MapBox'),
@@ -14,10 +11,9 @@ const MapBox = dynamic(
 )
 
 export default function Home() {
-
-  const { userLocation } = useAppContext()
+  const { location } = useAppContext()  
 
     return (
-      <MapBox userLocation={userLocation} />
+      <MapBox location={location} />
     )
 }

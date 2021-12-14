@@ -1,15 +1,16 @@
-import React, { useContext } from 'react';
-import usePlinct from '../../hooks/usePlinct/usePlinct';
+import React, { useContext } from 'react'
+import usePlinct from '../../hooks/usePlinct/usePlinct'
 
-import styles from './AppHeader.module.css';
+import styles from './AppHeader.module.css'
 
 const WhereButton = () => {
-    const { setIsLoadPlinct, setType, setQueryStrings } = usePlinct();
+    const { setIsLoadPlinct, setType, setQueryStrings, setMapZoom } = usePlinct()
 
     function handleOnClick() {
-        setIsLoadPlinct(true);
-        setType('place');
+        setIsLoadPlinct(true)
+        setType('place')
         setQueryStrings('nameLike=Piren%C3%B3polis&additionalType=administrativeArea')
+        setMapZoom(13)
     }
 
     return (
@@ -22,4 +23,4 @@ const WhereButton = () => {
     )
 }
 
-export default WhereButton;
+export default WhereButton

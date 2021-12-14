@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import GeoJson from "../../lib/GeoJson";
 
-
 /**
  * BUSCA A LOCALIZAÇÂO DO USUÁRIO
  * 

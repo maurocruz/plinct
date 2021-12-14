@@ -1,34 +1,32 @@
-import axios from 'axios';
+import axios from 'axios'
 import { useEffect, useState } from 'react'
 import GeoJson from '../../lib/GeoJson'
 
-import useAppContext from '../../contexts/App';
+import useAppContext from '../../contexts/App'
 
-import PlaceInterface from '../../interfaces/plinctApi/PlaceInterface';
+import PlaceInterface from '../../interfaces/plinctApi/PlaceInterface'
 
 const usePlinct = () => {
 
-    const { setNewFeatureCollection } = useAppContext();
+    const { setLocation } = useAppContext()
 
-    const [ type, setType ] = useState('place');
-    const [ queryStrings, setQueryStrings ] = useState(String);
+    const [ type, setType ] = useState('place')
+    const [ queryStrings, setQueryStrings ] = useState(String)
+    const [ mapZoom, setMapZoom ] = useState(14)
 
-    const [ isLoadingPlinct, setIsLoadPlinct ] = useState(false);
+    const [ isLoadingPlinct, setIsLoadPlinct ] = useState(false)
 
     useEffect(() => {
         if (isLoadingPlinct) {
             axios.get<PlaceInterface[]>(`https://plinct.com.br/api/${type}?${queryStrings}`)
             .then(response => {
                 const dataPlace = response.data
-
-                const newCollection = new GeoJson();
-
+                const location = new GeoJson()
                 const latitude = parseFloat(dataPlace[0].latitude)
                 const longitude = parseFloat(dataPlace[0].longitude)
-
-                newCollection.createPoint(longitude,latitude);
-
-                setNewFeatureCollection(newCollection.ready())
+                location.createPoint(longitude,latitude)
+                location.properties('zoom', mapZoom)
+                setLocation(location.ready())
                 setIsLoadPlinct(false);
             })
         }
@@ -37,10 +35,11 @@ const usePlinct = () => {
     return {
         setIsLoadPlinct,
         setType,
-        setQueryStrings
+        setQueryStrings,
+        setMapZoom
     }
 
 }
 
-export default usePlinct;
+export default usePlinct
 
