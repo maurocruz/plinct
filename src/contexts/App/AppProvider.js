@@ -2,6 +2,8 @@ import { useState, useMemo, useEffect } from 'react'
 
 import AppContext from './AppContext'
 
+import ViewportInterface from '../../interfaces/ViewportInterface'
+
 import AppLayout from '@components/AppLayout'
 
 import useEvents from '@hooks/useEvents'
@@ -12,13 +14,13 @@ import useLocation from '../../hooks/useLocation/useLocation'
 
 const AppProvider = ({ children }) => 
 {
-  const { userLocation } = useLocation()
+  const { dataUseLocation } = useLocation()
 
-  const [ location, setLocation ] = useState(userLocation)
+  const [ data, setData ] = useState(dataUseLocation)
 
   useEffect(() => {
-    setLocation(userLocation)
-  }, [userLocation])
+    setData(dataUseLocation)
+  }, [dataUseLocation])
 
   const { events, isLoadingEvents } = useEvents()
   const { places, isLoadingPlaces } = usePlaces()
@@ -55,8 +57,8 @@ const AppProvider = ({ children }) =>
   return (
     <AppContext.Provider
       value={{
-        location,
-        setLocation,
+        data,
+        setData,
         //collections,
         //selectedFeature,
         selectedNode,

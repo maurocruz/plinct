@@ -1,19 +1,21 @@
 
 
 interface Geometry {
-    type: string,
+    type: 'Point' | 'MultiPoint' | 'LineString' | 'MultiLineString' | 'Polygon' | 'MultiPolygon' | 'GeometryCollection',
     coordinates: [number, number]
 }
 
 interface Feature {
-    type: string,
+    type: 'Feature',
     geometry: Geometry,
-    properties: {} 
+    properties: {
+        name: string
+    } 
 
 }
 
 interface GeoJsonInterface {
-    type: String
+    type: 'FeatureCollection'
     features: Feature[]
 }
 

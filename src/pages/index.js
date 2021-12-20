@@ -11,9 +11,9 @@ const MapBox = dynamic(
 )
 
 export default function Home() {
-  const { location } = useAppContext()  
+  const { data } = useAppContext()  
 
     return (
-      <MapBox location={location} />
+      <MapBox data={data} />
     )
 }

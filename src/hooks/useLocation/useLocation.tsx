@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import GeoJson from "../../lib/GeoJson";
+import Data from "../../lib/Data";
 
 /**
  * BUSCA A LOCALIZAÇÂO DO USUÁRIO
@@ -9,27 +9,27 @@ import GeoJson from "../../lib/GeoJson";
 
 const useLocation = () => {
 
-  const startLocation = new GeoJson();
-  startLocation.createPoint(-47.889556334719465, -15.791592864042546);
-  startLocation.properties('zoom', 8);
-  startLocation.properties('name','Default location');
+  const data = new Data();
+  data.setViewPort().latitude(-15.791592864042546).longitude(-47.889556334719465).zoom(8)
+  data.setGeojson().geometry(-47.889556334719465, -15.791592864042546).properties('name','Default location').saveFeature()
 
-  const [ userLocation, setUserLocation ] = useState(startLocation.ready());
+  const [ dataUseLocation, setDataUserLocation ] = useState(data.ready());
 
   useEffect(() => {
-      navigator.geolocation.getCurrentPosition(function(position){    
-        const location = new GeoJson();    
+      navigator.geolocation.getCurrentPosition(function(position) {
         const latitude = position.coords.latitude; 
-        const longitude = position.coords.longitude;    
-        location.createPoint(longitude,latitude);
-        location.properties('zoom',13);
-        location.properties('name','User location');
-        setUserLocation(location.ready());        
+        const longitude = position.coords.longitude;   
+
+        const data = new Data();
+        data.setViewPort().latitude(latitude).longitude(longitude).zoom(13)
+        data.setGeojson().geometry(longitude,latitude).properties('name','User Location').saveFeature()
+
+        setDataUserLocation(data.ready());   
       });    
   },[])
 
   return {
-      userLocation
+    dataUseLocation
   }
 }
 

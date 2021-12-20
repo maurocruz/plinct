@@ -1,34 +1,39 @@
-import geo from './geo'
-
 
 class GeoJson 
 {
-    featureColletion = { 
+    private featureColletion = { 
         type: 'FeatureCollection',
-        features: []
+        features: [],
+        properties: {}
     };
 
-    features = []
+    private features = []
 
-    feature = { 
+    private feature = { 
         type: 'Feature',
         geometry: {},
         properties: {}
-    }    
+    } 
 
-    createPoint(latitude: number, longitude: number, type = 'Point') {
+    geometry(longitude: number, latitude: number, type = 'Point') {
         this.feature.geometry = {
             type: type,
-            coordinates: [ latitude, longitude ]
+            coordinates: [longitude,latitude]
         }
+        return this;
     }
 
     properties(name: string, value: any) {
         this.feature.properties[name] = value 
+        return this;
     }
 
-    ready() {  
+    saveFeature() {        
         this.features.push(this.feature)
+        this.feature = { type: 'Feature', geometry: {}, properties: {} }
+    }
+
+    ready() {   
         this.featureColletion.features = this.features;
         return this.featureColletion
     }

@@ -6,7 +6,7 @@ import { dataToGeoFeatureCollection } from '@lib/geo'
 
 import staticData from '@public/profiles'
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:1337'
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
 const PROFILES_ENDPOINT = `${API_URL}/profiles/xmap`
 const GMAPS_API_KEY = process.env.NEXT_PUBLIC_GMAPS_API_KEY
 const GMAPS_GEOCODE_ENDPOINT = `https://maps.googleapis.com/maps/api/geocode/json?key=${GMAPS_API_KEY}`

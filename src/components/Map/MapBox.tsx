@@ -1,66 +1,101 @@
-import React, { useEffect, useState } from "react";
-import ReactMapGL, { FlyToInterpolator, Marker } from 'react-map-gl';
-
 /**
- * COMPONENTE MAPA EM LEAFLET
  * 
+ * COMPONENT MAP EM MAPBOX
+ * 
+ */
+
+import React, { useEffect, useRef, useState } from "react";
+import ReactMapGL, { LayerProps, NavigationControl, MapEvent, Marker } from 'react-map-gl';
+import { Icon } from '@iconify/react';
+
+import TooltipRightButton from "./TooltipRightButton";
+import EventInfo from '../EventInfo/EventInfo'
+import DataInterface from "../../interfaces/DataInterface";
+
+// LAYER PROPERTIES
+const layerProps: LayerProps = {
+    id: 'point-default',
+    type: 'circle',
+    paint: {
+        'circle-radius': 7, 
+        'circle-color': '#1da1f2',
+        "circle-opacity": 0.9,
+        'circle-stroke-color': '#fff',
+        'circle-stroke-width': 3,
+        'circle-stroke-opacity': 0.9
+    }
+};
+
+// NAVIGATION STYLE
+const navigationControlerStyle = {
+    top: '5px',
+    left: '5px'
+}
+
+/**  
  * @param param0 
  * @returns 
  */
-const MapBox = ({ location }) => 
-{
-    // TOKEN
-    const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
-    
-    const [ features, setFeatures ] = useState(location.features);
+const MapBox = ({ data }) => 
+{    
+    const DATA = data as DataInterface;
 
-    // calcula o centro e o zoom do mapa
-    const longitude = location.features[0].geometry.coordinates[0];
-    const latitude = location.features[0].geometry.coordinates[1];
-    const mapZoom = location.features[0].properties.zoom ?? 8;
-    
-    const [viewport, setViewport] = useState({
-        latitude: latitude,
-        longitude: longitude,
-        zoom: mapZoom,
-        transitionDuration: 2500,
-        transitionInterpolator: new FlyToInterpolator()
-    });
+    const [ viewport, setViewport ] = useState(data.viewport);
+    const [ rightButton, setRightButton ] = useState<MapEvent>(null)
+    const [ eventInfo, setEventInfo ] = useState(null);
+
+
+    const reactMap = useRef();
+
+    // for get map size
+    const mapContainer = useRef<HTMLDivElement>()
 
     useEffect(()=>{
-        setViewport({
-            ...viewport,
-            latitude: location.features[0].geometry.coordinates[1],
-            longitude: location.features[0].geometry.coordinates[0],
-            zoom: location.features[0].properties.zoom ?? 12
-        })
-        setFeatures(location.features);        
-    },[location])
+        setViewport(data.viewport);
 
+    },[data])
+
+    function _onClick(e: MapEvent) {
+        if (e.rightButton) {
+            setRightButton(e);
+        }
+    }
+    
     return (
-        <ReactMapGL
-            mapStyle="mapbox://styles/mapbox/streets-v11"
-            mapboxApiAccessToken={process.env.NEXT_PUBLIC_MAPBOX_TOKEN}
-            {...viewport}
-            width="100%"
-            height="100%"
-            onViewportChange={(viewport) => setViewport(viewport)}
-        >
-        
-        {features.map((response: any)=>{
-            const latitude = response.geometry.coordinates[1];
-            const longitude = response.geometry.coordinates[0];
-            const name = response.properties.name;
+        <div ref={mapContainer}>
+            <ReactMapGL
+                ref={reactMap}
+                mapStyle="mapbox://styles/maurocruz/ckur99bp404ze15o0icj8kt6h"
+                mapboxApiAccessToken={process.env.NEXT_PUBLIC_MAPBOX_TOKEN}
+                {...viewport}
+                width="100%"
+                height="100%"
+                onViewportChange={(viewport: any) => setViewport(viewport)}
+                onClick={_onClick}      
+            >
+                {DATA.geojson.features.map((feature) => {
+                    const coordinates = feature.geometry.coordinates
+                    const lng = coordinates[0]
+                    const lat = coordinates[1]
+                    return (
+                        <Marker key={lng+lat} longitude={lng} latitude={lat} offsetLeft={-15} offsetTop={-20}>
+                            <Icon icon="gis:poi" color="#006ed6" width='30px' />
+                            <div style={{fontSize: '0.7em', backgroundColor: 'rgba(255,255,255,0.8)'}}>{feature.properties.name}</div>
+                        </Marker>
+                    )
+                })}
 
-            return (
-                <Marker key={latitude} latitude={latitude} longitude={longitude} offsetLeft={-7.5} offsetTop={-7.5}>
-                    <div className="mapboxgl-user-location-dot mapboxgl-marker mapboxgl-marker-anchor-center"></div>
-                </Marker>
-            )
+                <NavigationControl 
+                    style={navigationControlerStyle}
+                    showCompass={false}
+                />
 
-        })}
+                {rightButton && <TooltipRightButton mapEvent={rightButton} setRightButton={setRightButton} setEventInfo={setEventInfo}/>}
 
-        </ReactMapGL>
+                {eventInfo && <EventInfo>{eventInfo}</EventInfo>}
+
+            </ReactMapGL>
+        </div>
     )
 }
 

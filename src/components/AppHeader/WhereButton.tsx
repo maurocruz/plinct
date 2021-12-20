@@ -6,20 +6,34 @@ import styles from './AppHeader.module.css'
 const WhereButton = () => {
     const { setIsLoadPlinct, setType, setQueryStrings, setMapZoom } = usePlinct()
 
-    function handleOnClick() {
+    function handleOnClick(additionalType: string) {
         setIsLoadPlinct(true)
         setType('place')
-        setQueryStrings('nameLike=Piren%C3%B3polis&additionalType=administrativeArea')
-        setMapZoom(13)
+        setQueryStrings(`additionalType=${additionalType}`)
+        setMapZoom(16)
     }
 
     return (
-        <button
-            className={styles.button}
-            onClick={handleOnClick}
-        >
-            Where is Pirenópolis?
-        </button>
+        <>
+            <button
+                className={styles.button}
+                onClick={() => handleOnClick('City')}
+            >
+                Show cities?
+            </button>
+            <button
+                className={styles.button}
+                onClick={() => handleOnClick('FoodEstablishment')}
+            >
+                Piri food establishment?
+            </button>
+            <button
+                className={styles.button}
+                onClick={() => handleOnClick('LodgingBusiness')}
+            >
+                Piri lodging business?
+            </button>
+        </>
     )
 }
 
