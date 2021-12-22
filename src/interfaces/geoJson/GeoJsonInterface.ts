@@ -1,22 +1,24 @@
-
+interface Properties {
+    id: number,
+    name: string,
+    style: string
+}
 
 interface Geometry {
     type: 'Point' | 'MultiPoint' | 'LineString' | 'MultiLineString' | 'Polygon' | 'MultiPolygon' | 'GeometryCollection',
     coordinates: [number, number]
 }
 
-interface Feature {
+interface FeatureInterface {
     type: 'Feature',
     geometry: Geometry,
-    properties: {
-        name: string
-    } 
+    properties: Properties
 
 }
 
 interface GeoJsonInterface {
     type: 'FeatureCollection'
-    features: Feature[]
+    features: FeatureInterface[]
 }
 
-export default GeoJsonInterface;
+export type { FeatureInterface, GeoJsonInterface };

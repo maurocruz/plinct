@@ -46,8 +46,8 @@ const usePlinct = () => {
                     latitude = parseFloat(item.latitude)
 
                    // data.setViewPort().fitBounds(longitude,latitude);
-
-                    data.setGeojson().geometry(longitude,latitude).properties('name', item.name).saveFeature()
+                   
+                    data.setGeojson().geometry(longitude,latitude).properties('name', item.name).properties('id',item.idplace).saveFeature()
                 })
 
 

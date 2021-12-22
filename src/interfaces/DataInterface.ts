@@ -1,4 +1,4 @@
-import GeoJsonInterface from "./geoJson/GeoJsonInterface";
+import { GeoJsonInterface } from "./geoJson/GeoJsonInterface";
 import ViewportInterface from "./ViewportInterface";
 
 export default interface DataInterface {

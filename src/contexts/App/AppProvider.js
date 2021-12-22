@@ -2,25 +2,30 @@ import { useState, useMemo, useEffect } from 'react'
 
 import AppContext from './AppContext'
 
-import ViewportInterface from '../../interfaces/ViewportInterface'
-
 import AppLayout from '@components/AppLayout'
 
 import useEvents from '@hooks/useEvents'
 import usePlaces from '@hooks/usePlaces'
 import useProfiles from '@hooks/useProfiles'
 import useModal from '@hooks/useModal'
+
+import Data from "../../lib/Data";
 import useLocation from '../../hooks/useLocation/useLocation'
 
 const AppProvider = ({ children }) => 
 {
-  const { dataUseLocation } = useLocation()
+  // start location
+  const dataStart = new Data();
+  dataStart.setViewPort().latitude(-15.791592864042546).longitude(-47.889556334719465).zoom(5)
 
-  const [ data, setData ] = useState(dataUseLocation)
+  const [ data, setData ] = useState(dataStart.ready())
 
-  useEffect(() => {
+
+  //const { dataUseLocation } = useLocation()
+
+  /**useEffect(() => {
     setData(dataUseLocation)
-  }, [dataUseLocation])
+  }, [dataUseLocation])*/
 
   const { events, isLoadingEvents } = useEvents()
   const { places, isLoadingPlaces } = usePlaces()
