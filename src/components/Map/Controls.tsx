@@ -65,25 +65,12 @@ const ChangeTileset = ({mapStyle, setMapStyle, mapStreet, mapSattelite}) =>
 }
 
 /**
- * CONTROLE DE ZOOM
- * @returns 
- */
-const Navigation = () => {
-    return (
-        <NavigationControl 
-            style={{ top: '40px', left: '5px' }}
-            showCompass={false}
-        />
-    )
-}
-
-/**
  * BOTÃO PARA VOAR À LOCALIZAÇÃO DO USUARIO
  * @returns 
  */
 const UserLocation = () => {
 
-    const { setData } = useAppContext()
+   /* const { setData } = useAppContext()
 
     const { dataUseLocation } = useLocation()
 
@@ -102,7 +89,7 @@ const UserLocation = () => {
                 </button>
             </div>
         </div>
-    )
+    )*/
 }
 
-export { Navigation, UserLocation, ChangeTileset }
+export { UserLocation, ChangeTileset }

@@ -11,7 +11,7 @@ import Data from "../../lib/Data";
  */
 
 const useLocation = () => {
-  const { setData } = useAppContext()
+ /* const { setData } = useAppContext()
   const [ dataUseLocation, setDataUserLocation ] = useState(null);
 
   // user location
@@ -38,7 +38,7 @@ const useLocation = () => {
 
   return {
     dataUseLocation
-  }
+  }*/
 }
 
 export default useLocation;

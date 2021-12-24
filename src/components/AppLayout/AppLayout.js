@@ -8,14 +8,16 @@ import useAppContext from '@contexts/App'
 
 import * as styles from './AppLayout.module.css'
 
-const AppLayout = ({ isLoading, children }) => {
+const AppLayout = ({ isLoading, children }) => 
+{
   const { isModalVisible, toggleModal } = useAppContext()
+  
   return (
     <main className={styles.container}>
       <div className={styles.header}>
         <AppHeader />
       </div>
-      <div className={styles.map}>
+      <div id="content" className={styles.map}>
         {isLoading ? <Loading /> : children}
       </div>
       <InfoPanel />

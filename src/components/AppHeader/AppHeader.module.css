@@ -12,6 +12,9 @@
   align-self: center;
   margin: 0 10px 0 0;
 }
+.logo h1 {
+  margin: 0;
+}
 
 .logo img {
   display: block;

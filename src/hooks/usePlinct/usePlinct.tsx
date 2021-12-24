@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import GeoJson from '../../lib/GeoJson'
 
 import useAppContext from '../../contexts/App'
 
@@ -44,8 +43,6 @@ const usePlinct = () => {
 
                     longitude = parseFloat(item.longitude)
                     latitude = parseFloat(item.latitude)
-
-                   // data.setViewPort().fitBounds(longitude,latitude);
                    
                     data.setGeojson().geometry(longitude,latitude).properties('name', item.name).properties('id',item.idplace).saveFeature()
                 })

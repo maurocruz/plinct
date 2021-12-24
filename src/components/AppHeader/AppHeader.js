@@ -1,17 +1,14 @@
 import { useMemo } from 'react'
-import Image from 'next/image'
 import Select from 'react-select'
 
 import useAppContext from '@contexts/App'
 
 import * as styles from './AppHeader.module.css'
 
-import logo from '@public/x-team-logo.svg'
-
 import WhereButton from './WhereButton';
 
 const AppHeader = () => {
-  const { collections, selectedFeature, selectedNode, setSelected, toggleModal } = useAppContext()
+  const { collections, selectedNode, setSelected, toggleModal } = useAppContext()
 
   const GROUP_LABEL_BY_PROFILES = 'By Profiles'
   const GROUP_LABEL_BY_LOCATIONS = 'By Locations'
@@ -76,28 +73,11 @@ const AppHeader = () => {
   return (
     <div className={styles.component}>
       <div className={styles.logo}>
-        <h1>Plinct App</h1>
+        <h1>Plinct Map</h1>
       </div>
       <div className={styles.controls}>
         <WhereButton />
-        <button
-          className={styles.button}
-          onClick={toggleModal}
-        >
-          Add new profile
-        </button>
-        <div className={styles.selector}>
-          <Select
-            instanceId="profile-selector"
-            options={options}
-            value={selectedOption}
-            onChange={handleChange}
-            isClearable
-            isSearchable
-            placeholder={options ? 'Select by profile or location...' : 'Loading profiles...'}
-            isDisabled={!options}
-          />
-        </div>
+        <p>Login</p>
       </div>
     </div>
   )
