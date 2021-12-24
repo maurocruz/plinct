@@ -1,15 +1,12 @@
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import ReactMapGL, { MapEvent, GeolocateControl, NavigationControl, ScaleControl } from 'react-map-gl';
+import ReactMapGL, { MapEvent, GeolocateControl, NavigationControl, ScaleControl, Source, Layer } from 'react-map-gl';
 import Geocoder from 'react-map-gl-geocoder'
 
 import TooltipRightButton from "./TooltipRightButton";
 import EventInfo from '../EventInfo/EventInfo'
-import Points from "./Points";
-
-import DataInterface from "../../interfaces/DataInterface";
-import { FeatureInterface } from "../../interfaces/geoJson/GeoJsonInterface";
 import { ChangeTileset } from "./Controls";
+import WebMercatorViewport from "viewport-mercator-project";
 
 /**  
  * COMPONENT MAP EM MAPBOX
@@ -19,23 +16,33 @@ import { ChangeTileset } from "./Controls";
  */
 const MapBox = ({ data }) => 
 {    
-    const DATA = data as DataInterface;
-
     // VALUES QUE DEVEM SER DIMÂMICOS NO FUTURO
     const country = 'br' // país ou local cuja a busca do map deve ser restrito
 
-
     const mapStreet = "mapbox://styles/maurocruz/ckur99bp404ze15o0icj8kt6h"
     const mapSattelite = "mapbox://styles/maurocruz/ckxgf6qdl0p4g14rrqmkr7vh5"
+
+    const mapRef = useRef();
 
     const [ viewport, setViewport ] = useState(data.viewport);
     const [ rightButton, setRightButton ] = useState<MapEvent>(null)
     const [ eventInfo, setEventInfo ] = useState(null);
     const [ mapStyle, setMapStyle ] = useState(mapStreet)
 
-    const mapRef = useRef();
-
     useEffect(()=>{
+        const bounds = data.viewport.bbox;
+
+        if (bounds.length > 0) {
+            const webMercatorViewport = new WebMercatorViewport({width: 800, height:600})
+                .fitBounds(
+                    bounds,
+                    { padding: 20, offset: [0,-100] }
+                );
+            data.viewport.longitude = webMercatorViewport.longitude;
+            data.viewport.latitude = webMercatorViewport.latitude;
+            data.viewport.zoom = webMercatorViewport.zoom;
+        }
+
         setViewport(data.viewport);
     },[data])
 
@@ -50,6 +57,11 @@ const MapBox = ({ data }) =>
         []
     );
 
+    /*{DATA.geojson.features.map((feature: FeatureInterface) => { 
+        return <Points key={feature.properties.id} feature={feature} /> 
+    })}*/
+
+
     return (
         <ReactMapGL
             ref={mapRef}
@@ -62,9 +74,10 @@ const MapBox = ({ data }) =>
             onClick={_onClick}
         >
             
-            {DATA.geojson.features.map((feature: FeatureInterface) => { 
-                return <Points key={feature.properties.id} feature={feature} /> 
-            })}
+            <Source id="fromPlinctApi" type="geojson" data={data.geojson}>
+                <Layer id='point' type='circle' paint={{'circle-radius': 10,  'circle-color': '#007cbf'}}/>
+            </Source>
+            
 
             <Geocoder
                 mapRef={mapRef}

@@ -12,7 +12,6 @@ const usePlinct = () => {
 
     const [ type, setType ] = useState('place')
     const [ queryStrings, setQueryStrings ] = useState(String)
-    const [ mapZoom, setMapZoom ] = useState(14)
 
     const [ isLoadingPlinct, setIsLoadPlinct ] = useState(false)
 
@@ -48,28 +47,8 @@ const usePlinct = () => {
                 })
 
 
-                // TODO calcular o centro do mapa com múlitplas features
-                const numberOfItems = dataPlace.length;
-                const lngCenter = (lngMax + lngMin) / 2
-                const latCenter = (latMax + latMin) / 2
-
-                const lngDiff = lngMax - lngMin 
-                const latDiff = latMax - latMin 
-
-                const DiffMax = lngDiff > latDiff ? lngDiff : latDiff
-
-                console.log(DiffMax)
-
-                const zoom = 
-                    DiffMax > 3 ? 7.3
-                    : DiffMax > 2.3 ? 7.5
-                    : DiffMax > 2 ? 8
-                    : DiffMax > 1 ? 9
-                    : DiffMax > 0.2 ? 11 
-                    : DiffMax > 0.007 ? 16 
-                    : 18
-
-                data.setViewPort().latitude(latCenter).longitude(lngCenter).zoom(zoom)
+                // MONTA VIEWPORT
+                data.setViewPort().bbox(lngMax,latMax,lngMin,latMin);
 
                 setData(data.ready())
 
@@ -81,8 +60,7 @@ const usePlinct = () => {
     return {
         setIsLoadPlinct,
         setType,
-        setQueryStrings,
-        setMapZoom
+        setQueryStrings
     }
 
 }

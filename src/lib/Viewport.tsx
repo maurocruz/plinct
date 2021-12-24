@@ -7,30 +7,33 @@ class Viewport
         type: "ViewPort",
         transitionDuration: 2500,
         transitionInterpolator: new FlyToInterpolator(),
-        fitBounds: []
+        latitude: 0,
+        longitude: 0,
+        zoom: 0,
+        bbox: []
+
     }
 
     zoom(zoom: number) {
-        this.viewport['zoom'] = zoom
+        this.viewport.zoom = zoom
         return this
     }
 
     latitude(latitude: number) {
-        this.viewport['latitude'] = latitude
+        this.viewport.latitude = latitude
         return this
     }
 
     longitude(longitude: number) {
-        this.viewport['longitude'] = longitude
+        this.viewport.longitude = longitude
         return this
     }
 
-    fitBounds(longitude: number, latitude: number) {
-        this.viewport.fitBounds.push([ longitude, latitude ]);
+    bbox(lngMax: number, latMax: number, lngMin: number, latMin: number) {        
+        this.viewport.bbox = [ [lngMax, latMax ], [lngMin, latMin]];
     }
 
-    ready() 
-    {       
+    ready() {
         return this.viewport
     }
 }

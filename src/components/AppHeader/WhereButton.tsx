@@ -4,13 +4,12 @@ import usePlinct from '../../hooks/usePlinct/usePlinct'
 import styles from './AppHeader.module.css'
 
 const WhereButton = () => {
-    const { setIsLoadPlinct, setType, setQueryStrings, setMapZoom } = usePlinct()
+    const { setIsLoadPlinct, setType, setQueryStrings } = usePlinct()
 
     function handleOnClick(additionalType: string) {
         setIsLoadPlinct(true)
         setType('place')
         setQueryStrings(`additionalType=${additionalType}`)
-        setMapZoom(16)
     }
 
     return (
